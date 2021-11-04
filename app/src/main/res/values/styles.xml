@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="item_name_text_style">
+
+        <item name="android:textSize">
+            20sp
+        </item>
+        <item name="fontFamily">lora</item>
+        <item name="android:textColor">
+            @color/main_navy
+        </item>
+
+    </style>
+
+</resources>
