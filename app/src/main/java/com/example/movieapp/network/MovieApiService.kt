@@ -14,8 +14,8 @@ private const val BASE_URL = "https://api.themoviedb.org/3/"
 
 interface Api {
 
-    @GET("movie/popular")
-    fun getPopularMovies(
+    @GET("movie/upcoming")
+    fun getMovies(
         @Query("api_key") apiKey: String = "7f61a9bc205af1ae9398b674cbca110c",
         @Query("page") page: Int
     ): Call<GetMoviesResponse>
@@ -35,10 +35,10 @@ object MoviesRepository {
         api = retrofit.create(Api::class.java)
     }
 
-    fun getPopularMovies(page: Int = 1, onSuccess: (movies: List<Movie>) -> Unit,
+    fun getMovies(page: Int = 1, onSuccess: (movies: List<Movie>) -> Unit,
                          onError: () -> Unit) {
 
-        api.getPopularMovies(page = page)
+        api.getMovies(page = page)
             .enqueue(object : Callback<GetMoviesResponse> {
                 override fun onResponse(
                     call: Call<GetMoviesResponse>,

@@ -17,8 +17,8 @@ import com.example.movieapp.network.MoviesRepository
 
 class ListFragment : Fragment() {
 
-    private lateinit var popularMovies: RecyclerView
-    private lateinit var popularMoviesAdapter: MoviesAdapter
+    private lateinit var listedMovies: RecyclerView
+    private lateinit var listedMoviesAdapter: MoviesAdapter
 
     private val viewModel: ListViewModel by lazy {
         ViewModelProvider(this)[ListViewModel::class.java]
@@ -30,27 +30,25 @@ class ListFragment : Fragment() {
     ): View? {
         val binding = FragmentListBinding.inflate(inflater)
 
-        popularMovies = binding.popularMovies
-        popularMovies.layoutManager = LinearLayoutManager(
+        listedMovies = binding.listedMovies
+        listedMovies.layoutManager = LinearLayoutManager(
             requireContext(),
             LinearLayoutManager.VERTICAL,
             false
         )
 
-        popularMoviesAdapter = MoviesAdapter(listOf())
-        popularMovies.adapter = popularMoviesAdapter
-        MoviesRepository.getPopularMovies(onSuccess = ::onPopularMoviesFetched,
+        listedMoviesAdapter = MoviesAdapter(listOf())
+        listedMovies.adapter = listedMoviesAdapter
+        MoviesRepository.getMovies(onSuccess = ::onListedMoviesFetched,
             onError = ::onError)
-
-
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
         return binding.root
     }
-    private fun onPopularMoviesFetched(movies: List<Movie>) {
-        popularMoviesAdapter.updateMovies(movies)
+    private fun onListedMoviesFetched(movies: List<Movie>) {
+        listedMoviesAdapter.updateMovies(movies)
     }
     private fun onError() {
         Log.d("MainActivity", "Failed")

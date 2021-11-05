@@ -14,15 +14,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:background="@color/main_navy">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/popular_movies"
+            android:id="@+id/listed_movies"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="false"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

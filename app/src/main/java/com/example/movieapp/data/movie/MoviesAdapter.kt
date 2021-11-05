@@ -44,7 +44,6 @@ class MoviesAdapter (
                 .load("https://image.tmdb.org/t/p/w342${movie.posterPath}")
                 .transform(CenterCrop())
                 .into(poster)
-
             name.text = movie.title
             rating.text = movie.rating.toString()
             year.text = movie.releaseDate.substring(0,4)

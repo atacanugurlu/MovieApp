@@ -5,11 +5,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="172dp"
+    android:layout_height="184dp"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp"
-    android:background="@drawable/list_item_border"
-    android:backgroundTint="@color/pastel_background"
+    android:background="@drawable/list_item_background"
     app:cardCornerRadius="4dp">
 
     <ImageView
@@ -19,7 +18,7 @@
         android:cropToPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -32,6 +31,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/movie_name"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/item_movie_rating"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -46,17 +46,19 @@
         android:layout_height="wrap_content"
         android:drawablePadding="5dp"
         android:text="@string/rating"
+        app:drawableStartCompat="@drawable/icon_rating"
         app:layout_constraintBottom_toTopOf="@+id/item_movie_year"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/item_movie_poster"
-        app:layout_constraintTop_toBottomOf="@+id/item_movie_name"
-        app:drawableStartCompat="@android:drawable/btn_star_big_on" />
+        app:layout_constraintStart_toStartOf="@+id/item_movie_year"
+        app:layout_constraintTop_toBottomOf="@+id/item_movie_name" />
 
     <TextView
         android:id="@+id/item_movie_year"
         style="@style/item_name_text_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:drawableStart="@drawable/icon_date"
+        android:drawablePadding="5dp"
         android:text="@string/movie_year"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

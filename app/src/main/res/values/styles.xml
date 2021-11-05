@@ -8,7 +8,7 @@
         </item>
         <item name="fontFamily">lora</item>
         <item name="android:textColor">
-            @color/main_navy
+            @color/white
         </item>
 
     </style>
