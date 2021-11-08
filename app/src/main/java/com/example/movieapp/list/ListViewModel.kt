@@ -9,14 +9,5 @@ import com.example.movieapp.network.MoviesRepository
 class ListViewModel : ViewModel() {
 
 
-    private val _responseData = MutableLiveData<String>()
-
-    val responseData: LiveData<String>
-        get() = _responseData
-
-    init {
-
-    }
-
 
 }

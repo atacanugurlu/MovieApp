@@ -29,6 +29,8 @@
         style="@style/item_name_text_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
         android:gravity="center"
         android:text="@string/movie_name"
         android:textSize="24sp"
@@ -57,14 +59,14 @@
         style="@style/item_name_text_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableStart="@drawable/icon_date"
         android:drawablePadding="5dp"
         android:text="@string/movie_year"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/item_movie_poster"
-        app:layout_constraintTop_toBottomOf="@+id/item_movie_rating" />
+        app:layout_constraintTop_toBottomOf="@+id/item_movie_rating"
+        app:drawableStartCompat="@drawable/icon_date" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

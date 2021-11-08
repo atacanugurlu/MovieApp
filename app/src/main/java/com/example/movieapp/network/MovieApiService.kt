@@ -14,7 +14,7 @@ private const val BASE_URL = "https://api.themoviedb.org/3/"
 
 interface Api {
 
-    @GET("movie/upcoming")
+    @GET("movie/popular")
     fun getMovies(
         @Query("api_key") apiKey: String = "7f61a9bc205af1ae9398b674cbca110c",
         @Query("page") page: Int
