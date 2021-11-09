@@ -1,30 +1,27 @@
 package com.example.movieapp.data.movie
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.example.movieapp.R
+import com.example.movieapp.databinding.ItemMovieBinding
 
-class MoviesAdapter (
+class MoviesAdapter(
     private var movies: MutableList<Movie>
-) : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
+) : ListAdapter<Movie, MoviesAdapter.MovieViewHolder>(MovieDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        val view = LayoutInflater
-            .from(parent.context)
-            .inflate(R.layout.item_movie, parent, false)
-        return MovieViewHolder(view)
+        return MovieViewHolder.from(parent)
     }
 
-    override fun getItemCount(): Int = movies.size
+   override fun getItemCount(): Int = movies.size
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.bind(movies[position])
+        val item = movies[position]
+        holder.bind(item)
     }
 
     fun appendMovies(movies: List<Movie>) {
@@ -35,21 +32,36 @@ class MoviesAdapter (
         )
     }
 
-    inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class MovieViewHolder private constructor(val binding: ItemMovieBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        private val poster: ImageView = itemView.findViewById(R.id.item_movie_poster)
-        private val name: TextView = itemView.findViewById(R.id.item_movie_name)
-        private val rating: TextView = itemView.findViewById(R.id.item_movie_rating)
-        private val year: TextView = itemView.findViewById(R.id.item_movie_year)
-
+        //wrapper for third party (Glide)
         fun bind(movie: Movie) {
             Glide.with(itemView)
                 .load("https://image.tmdb.org/t/p/w342${movie.posterPath}")
                 .transform(CenterCrop())
-                .into(poster)
-            name.text = movie.title
-            rating.text = movie.rating.toString()
-            year.text = movie.releaseDate.substring(0,4)
+                .into(binding.itemMoviePoster)
+            binding.itemMovieName.text = movie.title
+            binding.itemMovieRating.text = movie.rating.toString()
+            binding.itemMovieYear.text = movie.releaseDate.substring(0, 4)
+        }
+
+        companion object {
+            fun from(parent: ViewGroup): MovieViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = ItemMovieBinding.inflate(layoutInflater, parent, false)
+                return MovieViewHolder(binding)
+            }
         }
     }
+}
+
+class MovieDiffCallback: DiffUtil.ItemCallback<Movie>(){
+    override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+        return oldItem == newItem
+    }
+
 }

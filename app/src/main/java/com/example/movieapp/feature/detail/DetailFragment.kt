@@ -1,4 +1,4 @@
-package com.example.movieapp.detail
+package com.example.movieapp.feature.detail
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle

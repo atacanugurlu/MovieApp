@@ -1,18 +1,15 @@
-package com.example.movieapp.list
+package com.example.movieapp.feature.list
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.movieapp.data.movie.Movie
 import com.example.movieapp.data.movie.MoviesAdapter
 import com.example.movieapp.databinding.FragmentListBinding
-import com.example.movieapp.network.MoviesRepository
 
 
 class ListFragment : Fragment() {
@@ -21,7 +18,7 @@ class ListFragment : Fragment() {
     private lateinit var listedMoviesAdapter: MoviesAdapter
     private lateinit var listedMoviesLayoutManager: LinearLayoutManager
 
-    private var listedMoviesPage = 1
+
 
     private val viewModel: ListViewModel by lazy {
         ViewModelProvider(this)[ListViewModel::class.java]
@@ -35,6 +32,14 @@ class ListFragment : Fragment() {
 
         listedMovies = binding.listedMovies
 
+        viewModel.movieData.observe(viewLifecycleOwner){ moviesList ->
+            listedMoviesAdapter.appendMovies(moviesList)
+            //listedMoviesAdapter.submitList(moviesList)
+            attachListedMoviesOnScrollListener()
+
+        }
+        viewModel.getListedMovies()
+
         listedMoviesLayoutManager = LinearLayoutManager(
             requireContext(),
             LinearLayoutManager.VERTICAL,
@@ -44,26 +49,11 @@ class ListFragment : Fragment() {
         listedMovies.layoutManager = listedMoviesLayoutManager
         listedMoviesAdapter = MoviesAdapter(mutableListOf())
         listedMovies.adapter = listedMoviesAdapter
-        getListedMovies()
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
         return binding.root
-    }
-    private fun getListedMovies() {
-        MoviesRepository.getMovies(
-            listedMoviesPage,
-            ::onListedMoviesFetched,
-            ::onError
-        )
-    }
-    private fun onListedMoviesFetched(movies: List<Movie>) {
-        listedMoviesAdapter.appendMovies(movies)
-        attachListedMoviesOnScrollListener()
-    }
-    private fun onError() {
-        Log.d("List", "Failed")
     }
 
     private fun attachListedMoviesOnScrollListener() {
@@ -75,10 +65,11 @@ class ListFragment : Fragment() {
 
                 if (firstVisibleItem + visibleItemCount >= totalItemCount / 2) {
                     listedMovies.removeOnScrollListener(this)
-                    listedMoviesPage++
-                    getListedMovies()
+                    viewModel.listedMoviesPage++
+                    viewModel.getListedMovies()
                 }
             }
         })
     }
+
 }
