@@ -15,6 +15,9 @@ data class FavouriteMovie(
     @ColumnInfo(name = "movie_overview")
     val overview: String,
 
+    @ColumnInfo(name = "movie_backdrop_path")
+    val backdrop_path: String,
+
     @ColumnInfo(name = "movie_poster_path")
     val poster_path: String,
 

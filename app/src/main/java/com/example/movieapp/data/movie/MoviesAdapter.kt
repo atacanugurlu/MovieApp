@@ -1,12 +1,17 @@
 package com.example.movieapp.data.movie
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.example.movieapp.R
 import com.example.movieapp.databinding.ItemMovieBinding
 
 class MoviesAdapter(
@@ -43,6 +48,11 @@ class MoviesAdapter(
             binding.itemMovieName.text = movie.title
             binding.itemMovieRating.text = movie.rating.toString()
             binding.itemMovieYear.text = movie.releaseDate.substring(0, 4)
+
+            // Navigate to detail fragment
+            itemView.setOnClickListener(
+                Navigation.createNavigateOnClickListener(R.id.action_listFragment_to_detailFragment)
+            )
         }
 
         companion object {
@@ -52,6 +62,7 @@ class MoviesAdapter(
                 return MovieViewHolder(binding)
             }
         }
+
     }
 }
 

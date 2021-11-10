@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.movieapp.R
 import com.example.movieapp.data.movie.MoviesAdapter
 import com.example.movieapp.databinding.FragmentListBinding
 
@@ -17,7 +19,6 @@ class ListFragment : Fragment() {
     private lateinit var listedMovies: RecyclerView
     private lateinit var listedMoviesAdapter: MoviesAdapter
     private lateinit var listedMoviesLayoutManager: LinearLayoutManager
-
 
 
     private val viewModel: ListViewModel by lazy {
@@ -38,6 +39,8 @@ class ListFragment : Fragment() {
             attachListedMoviesOnScrollListener()
 
         }
+
+
         viewModel.getListedMovies()
 
         listedMoviesLayoutManager = LinearLayoutManager(
@@ -53,7 +56,7 @@ class ListFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        return binding.root
+            return binding.root
     }
 
     private fun attachListedMoviesOnScrollListener() {
