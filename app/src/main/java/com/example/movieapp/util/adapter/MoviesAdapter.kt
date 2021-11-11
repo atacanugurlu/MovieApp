@@ -1,17 +1,14 @@
-package com.example.movieapp.data.movie
+package com.example.movieapp.util.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.example.movieapp.R
+import com.example.movieapp.data.movie.Movie
 import com.example.movieapp.databinding.ItemMovieBinding
 
 class MoviesAdapter(

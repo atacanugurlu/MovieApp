@@ -1,20 +1,28 @@
 package com.example.movieapp.feature.list
 
+import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.movieapp.R
-import com.example.movieapp.data.movie.MoviesAdapter
+import com.example.movieapp.MainApp
+import com.example.movieapp.util.adapter.MoviesAdapter
 import com.example.movieapp.databinding.FragmentListBinding
+import com.example.movieapp.network.Api
+import retrofit2.Retrofit
+import javax.inject.Inject
 
 
 class ListFragment : Fragment() {
+
+    @Inject
+    lateinit var retrofit: Retrofit
+    @Inject
+    lateinit var api: Api
 
     private lateinit var listedMovies: RecyclerView
     private lateinit var listedMoviesAdapter: MoviesAdapter
@@ -70,6 +78,11 @@ class ListFragment : Fragment() {
                 }
             }
         })
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        MainApp.instance.appComponent.inject(this)
     }
 
 }

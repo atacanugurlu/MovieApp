@@ -1,5 +1,6 @@
 package com.example.movieapp.network
 
+import com.example.movieapp.data.Constants.BASE_URL
 import com.example.movieapp.data.movie.GetMoviesResponse
 import com.example.movieapp.data.movie.Movie
 import retrofit2.Call
@@ -9,8 +10,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
+import javax.inject.Inject
 
-private const val BASE_URL = "https://api.themoviedb.org/3/"
 
 interface Api {
 
@@ -24,16 +25,23 @@ interface Api {
 
 object MoviesRepository {
 
-    private val api: Api
+    var api: Api
 
     init {
+
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         api = retrofit.create(Api::class.java)
+
+
     }
+
+
+
+
 
     fun getMovies(
         page: Int = 1, onSuccess: (movies: List<Movie>) -> Unit,
