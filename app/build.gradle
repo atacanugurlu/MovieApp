@@ -56,7 +56,8 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.12.0'
 
     // Dagger 2
-
+    implementation 'com.google.dagger:dagger:2.40'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.40'
 
     // Navigation
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'

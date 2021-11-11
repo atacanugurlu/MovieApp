@@ -35,8 +35,10 @@ object MoviesRepository {
         api = retrofit.create(Api::class.java)
     }
 
-    fun getMovies(page: Int = 1, onSuccess: (movies: List<Movie>) -> Unit,
-                         onError: () -> Unit) {
+    fun getMovies(
+        page: Int = 1, onSuccess: (movies: List<Movie>) -> Unit,
+        onError: () -> Unit
+    ) {
 
         api.getMovies(page = page)
             .enqueue(object : Callback<GetMoviesResponse> {
@@ -52,7 +54,7 @@ object MoviesRepository {
                         } else {
                             onError.invoke()
                         }
-                    }else {
+                    } else {
                         onError.invoke()
                     }
                 }

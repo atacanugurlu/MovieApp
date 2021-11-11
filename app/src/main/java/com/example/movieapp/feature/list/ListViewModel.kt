@@ -21,8 +21,8 @@ class ListViewModel : ViewModel() {
     }
 
     private fun onListedMoviesFetched(movies: List<Movie>) {
-
        movieData.value = movies
+
     }
     private fun onError() {
         Log.d("List", "Failed")

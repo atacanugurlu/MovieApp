@@ -20,7 +20,6 @@ class ListFragment : Fragment() {
     private lateinit var listedMoviesAdapter: MoviesAdapter
     private lateinit var listedMoviesLayoutManager: LinearLayoutManager
 
-
     private val viewModel: ListViewModel by lazy {
         ViewModelProvider(this)[ListViewModel::class.java]
     }
@@ -37,9 +36,7 @@ class ListFragment : Fragment() {
             listedMoviesAdapter.appendMovies(moviesList)
             //listedMoviesAdapter.submitList(moviesList)
             attachListedMoviesOnScrollListener()
-
         }
-
 
         viewModel.getListedMovies()
 

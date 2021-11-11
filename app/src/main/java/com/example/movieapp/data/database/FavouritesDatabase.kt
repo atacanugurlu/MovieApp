@@ -4,8 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.movieapp.data.movie.Movie
 
-@Database(entities = [FavouriteMovie::class], version = 1, exportSchema = false)
+@Database(entities = [Movie::class], version = 1, exportSchema = false)
 abstract class FavouritesDatabase : RoomDatabase() {
 
     abstract val favouritesDatabaseDao : FavouritesDatabaseDao

@@ -16,7 +16,7 @@ import com.example.movieapp.databinding.ItemMovieBinding
 
 class MoviesAdapter(
     private var movies: MutableList<Movie>
-) : ListAdapter<Movie, MoviesAdapter.MovieViewHolder>(MovieDiffCallback()) {
+) : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         return MovieViewHolder.from(parent)
@@ -37,9 +37,9 @@ class MoviesAdapter(
         )
     }
 
+
     class MovieViewHolder private constructor(val binding: ItemMovieBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        //wrapper for third party (Glide)
         fun bind(movie: Movie) {
             Glide.with(itemView)
                 .load("https://image.tmdb.org/t/p/w342${movie.posterPath}")
