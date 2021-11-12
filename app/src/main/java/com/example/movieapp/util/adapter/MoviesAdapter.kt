@@ -1,6 +1,7 @@
 package com.example.movieapp.util.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
@@ -47,9 +48,7 @@ class MoviesAdapter(
             binding.itemMovieYear.text = movie.releaseDate.substring(0, 4)
 
             // Navigate to detail fragment
-            itemView.setOnClickListener(
-                Navigation.createNavigateOnClickListener(R.id.action_listFragment_to_detailFragment)
-            )
+            navigateToDetails(itemView, movie)
         }
 
         companion object {
@@ -61,6 +60,11 @@ class MoviesAdapter(
         }
 
     }
+}
+private fun navigateToDetails(itemView: View, movie : Movie){
+    itemView.setOnClickListener(
+        Navigation.createNavigateOnClickListener(R.id.action_listFragment_to_detailFragment)
+    )
 }
 
 class MovieDiffCallback: DiffUtil.ItemCallback<Movie>(){

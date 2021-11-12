@@ -1,9 +1,11 @@
 package com.example.movieapp.data.movie
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "favourite_movies_table")
 data class Movie(

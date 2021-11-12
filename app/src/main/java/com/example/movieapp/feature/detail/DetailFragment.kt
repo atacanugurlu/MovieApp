@@ -14,7 +14,10 @@ import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil.bind
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.example.movieapp.R
+import com.example.movieapp.data.movie.Movie
 import com.example.movieapp.databinding.FragmentDetailBinding
 
 const val MOVIE_BACKDROP = "extra_movie_backdrop"
@@ -50,5 +53,28 @@ class DetailFragment : Fragment() {
 
         return binding.root
     }
+
+    private fun populateDetails(extras: Bundle) {
+        extras.getString(MOVIE_BACKDROP)?.let { backdropPath ->
+            Glide.with(this)
+                .load("https://image.tmdb.org/t/p/w1280$backdropPath")
+                .transform(CenterCrop())
+                .into(backdrop)
+        }
+
+        extras.getString(MOVIE_POSTER)?.let { posterPath ->
+            Glide.with(this)
+                .load("https://image.tmdb.org/t/p/w342$posterPath")
+                .transform(CenterCrop())
+                .into(poster)
+        }
+
+        title.text = extras.getString(MOVIE_TITLE, "")
+        rating.rating = extras.getFloat(MOVIE_RATING, 0f) / 2
+        releaseDate.text = extras.getString(MOVIE_RELEASE_DATE, "")
+        overview.text = extras.getString(MOVIE_OVERVIEW, "")
+    }
+
+
 
 }
