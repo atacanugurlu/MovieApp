@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.MainApp
@@ -26,7 +27,9 @@ class ListFragment : Fragment() {
 
     private lateinit var listedMovies: RecyclerView
     private lateinit var listedMoviesAdapter: MoviesAdapter
-    private lateinit var listedMoviesLayoutManager: LinearLayoutManager
+    private lateinit var listedMoviesLinearLayoutManager: LinearLayoutManager
+    private lateinit var listedMoviesGridLayoutManager: GridLayoutManager
+
 
     private val viewModel: ListViewModel by lazy {
         ViewModelProvider(this)[ListViewModel::class.java]
@@ -48,13 +51,13 @@ class ListFragment : Fragment() {
 
         viewModel.getListedMovies()
 
-        listedMoviesLayoutManager = LinearLayoutManager(
+        listedMoviesLinearLayoutManager = LinearLayoutManager(
             requireContext(),
             LinearLayoutManager.VERTICAL,
             false
         )
 
-        listedMovies.layoutManager = listedMoviesLayoutManager
+        listedMovies.layoutManager = listedMoviesLinearLayoutManager
         listedMoviesAdapter = MoviesAdapter(mutableListOf())
         listedMovies.adapter = listedMoviesAdapter
 
@@ -67,9 +70,9 @@ class ListFragment : Fragment() {
     private fun attachListedMoviesOnScrollListener() {
         listedMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                val totalItemCount = listedMoviesLayoutManager.itemCount
-                val visibleItemCount = listedMoviesLayoutManager.childCount
-                val firstVisibleItem = listedMoviesLayoutManager.findFirstVisibleItemPosition()
+                val totalItemCount = listedMoviesLinearLayoutManager.itemCount
+                val visibleItemCount = listedMoviesLinearLayoutManager.childCount
+                val firstVisibleItem = listedMoviesLinearLayoutManager.findFirstVisibleItemPosition()
 
                 if (firstVisibleItem + visibleItemCount >= totalItemCount / 2) {
                     listedMovies.removeOnScrollListener(this)

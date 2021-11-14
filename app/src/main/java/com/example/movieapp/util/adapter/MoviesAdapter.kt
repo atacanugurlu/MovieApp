@@ -10,11 +10,14 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.example.movieapp.R
 import com.example.movieapp.data.movie.Movie
-import com.example.movieapp.databinding.ItemMovieBinding
+import com.example.movieapp.databinding.GridItemMovieBinding
+import com.example.movieapp.databinding.ListItemMovieBinding
 
 class MoviesAdapter(
     private var movies: MutableList<Movie>
 ) : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         return MovieViewHolder.from(parent)
@@ -36,7 +39,7 @@ class MoviesAdapter(
     }
 
 
-    class MovieViewHolder private constructor(val binding: ItemMovieBinding) : RecyclerView.ViewHolder(binding.root) {
+    class MovieViewHolder private constructor(val binding: ListItemMovieBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie: Movie) {
             Glide.with(itemView)
@@ -45,7 +48,11 @@ class MoviesAdapter(
                 .into(binding.itemMoviePoster)
             binding.itemMovieName.text = movie.title
             binding.itemMovieRating.text = movie.rating.toString()
-            binding.itemMovieYear.text = movie.releaseDate.substring(0, 4)
+            binding.itemMovieYear.text = when(movie.releaseDate.length){
+                0 -> "N/A"
+                else -> movie.releaseDate.substring(0, 4)
+            }
+          //  binding.itemMovieYear.text = movie.releaseDate.substring(0, 4)
 
             // Navigate to detail fragment
             navigateToDetails(itemView, movie)
@@ -54,11 +61,33 @@ class MoviesAdapter(
         companion object {
             fun from(parent: ViewGroup): MovieViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = ItemMovieBinding.inflate(layoutInflater, parent, false)
+                val binding = ListItemMovieBinding.inflate(layoutInflater, parent, false)
                 return MovieViewHolder(binding)
             }
         }
 
+    }
+
+    class GridViewHolder private constructor(val binding: GridItemMovieBinding) : RecyclerView.ViewHolder(binding.root){
+
+
+        fun bind(movie: Movie) {
+            Glide.with(itemView)
+                .load("https://image.tmdb.org/t/p/w342${movie.posterPath}")
+                .transform(CenterCrop())
+                .into(binding.itemMoviePoster)
+
+            // Navigate to detail fragment
+            navigateToDetails(itemView, movie)
+        }
+
+        companion object {
+            fun from(parent: ViewGroup): GridViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = GridItemMovieBinding.inflate(layoutInflater, parent, false)
+                return GridViewHolder(binding)
+            }
+        }
     }
 }
 private fun navigateToDetails(itemView: View, movie : Movie){

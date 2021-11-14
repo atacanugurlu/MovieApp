@@ -2,15 +2,16 @@
 <resources>
 
     <style name="item_name_text_style">
-
-        <item name="android:textSize">
-            20sp
-        </item>
+        <item name="android:textSize">20sp</item>
         <item name="fontFamily">lora</item>
-        <item name="android:textColor">
-            @color/white
-        </item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 
+    <style name="radio_group_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">start</item>
     </style>
 
 </resources>
