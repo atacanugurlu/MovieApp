@@ -1,6 +1,5 @@
 package com.example.movieapp.feature.detail
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,26 +8,16 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
-import androidx.databinding.DataBindingUtil.bind
-import androidx.databinding.DataBindingUtil.setContentView
-import androidx.recyclerview.widget.RecyclerView
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.example.movieapp.R
-import com.example.movieapp.data.movie.Movie
 import com.example.movieapp.databinding.FragmentDetailBinding
 
-const val MOVIE_BACKDROP = "extra_movie_backdrop"
-const val MOVIE_POSTER = "extra_movie_poster"
-const val MOVIE_TITLE = "extra_movie_title"
-const val MOVIE_RATING = "extra_movie_rating"
-const val MOVIE_RELEASE_DATE = "extra_movie_release_date"
-const val MOVIE_OVERVIEW = "extra_movie_overview"
 
 class DetailFragment : Fragment() {
 
+    private val args by navArgs<DetailFragmentArgs>()
     private lateinit var movieDetails: NestedScrollView
     private lateinit var backdrop: ImageView
     private lateinit var poster: ImageView
@@ -51,28 +40,29 @@ class DetailFragment : Fragment() {
         releaseDate = binding.movieReleaseDate
         overview = binding.movieOverview
 
+        populateDetails(args)
         return binding.root
     }
 
-    private fun populateDetails(extras: Bundle) {
-        extras.getString(MOVIE_BACKDROP)?.let { backdropPath ->
+    private fun populateDetails(args : DetailFragmentArgs) {
+        args.movieDetail.let { backdropPath ->
             Glide.with(this)
-                .load("https://image.tmdb.org/t/p/w1280$backdropPath")
+                .load("https://image.tmdb.org/t/p/w1280${args.movieDetail.backdropPath}")
                 .transform(CenterCrop())
                 .into(backdrop)
         }
 
-        extras.getString(MOVIE_POSTER)?.let { posterPath ->
+        args.movieDetail.let { posterPath ->
             Glide.with(this)
-                .load("https://image.tmdb.org/t/p/w342$posterPath")
+                .load("https://image.tmdb.org/t/p/w342${args.movieDetail.posterPath}")
                 .transform(CenterCrop())
                 .into(poster)
         }
 
-        title.text = extras.getString(MOVIE_TITLE, "")
-        rating.rating = extras.getFloat(MOVIE_RATING, 0f) / 2
-        releaseDate.text = extras.getString(MOVIE_RELEASE_DATE, "")
-        overview.text = extras.getString(MOVIE_OVERVIEW, "")
+        title.text = args.movieDetail.title.toString()
+        rating.rating = args.movieDetail.rating / 2
+        releaseDate.text = args.movieDetail.releaseDate.toString()
+        overview.text = args.movieDetail.overview.toString()
     }
 
 

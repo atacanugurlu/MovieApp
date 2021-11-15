@@ -3,7 +3,9 @@ package com.example.movieapp.util.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -12,6 +14,7 @@ import com.example.movieapp.R
 import com.example.movieapp.data.movie.Movie
 import com.example.movieapp.databinding.GridItemMovieBinding
 import com.example.movieapp.databinding.ListItemMovieBinding
+import com.example.movieapp.feature.list.ListFragmentDirections
 
 class MoviesAdapter(
     private var movies: MutableList<Movie>
@@ -48,9 +51,9 @@ class MoviesAdapter(
                 .into(binding.itemMoviePoster)
             binding.itemMovieName.text = movie.title
             binding.itemMovieRating.text = movie.rating.toString()
-            binding.itemMovieYear.text = when(movie.releaseDate.length){
-                0 -> "N/A"
-                else -> movie.releaseDate.substring(0, 4)
+            binding.itemMovieYear.text = when(movie.releaseDate?.length){
+                in 0..3 -> "N/A"
+                else -> movie.releaseDate?.substring(0, 4)
             }
           //  binding.itemMovieYear.text = movie.releaseDate.substring(0, 4)
 
@@ -90,10 +93,14 @@ class MoviesAdapter(
         }
     }
 }
+
 private fun navigateToDetails(itemView: View, movie : Movie){
-    itemView.setOnClickListener(
-        Navigation.createNavigateOnClickListener(R.id.action_listFragment_to_detailFragment)
-    )
+
+    itemView.setOnClickListener{
+        val action: NavDirections = ListFragmentDirections.actionListFragmentToDetailFragment(movie)
+        findNavController(itemView).navigate(action)
+       // Navigation.createNavigateOnClickListener(R.id.action_listFragment_to_detailFragment)
+    }
 }
 
 class MovieDiffCallback: DiffUtil.ItemCallback<Movie>(){

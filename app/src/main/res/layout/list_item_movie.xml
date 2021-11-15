@@ -79,7 +79,7 @@
             app:layout_constraintTop_toBottomOf="@+id/item_movie_rating" />
 
         <ToggleButton
-            android:id="@+id/toggleButton"
+            android:id="@+id/main_favourites_toggle_button"
             android:layout_width="26dp"
             android:layout_height="26dp"
             android:background="@drawable/icon_favourite_empty"

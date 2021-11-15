@@ -53,13 +53,14 @@
 
             <TextView
                 android:id="@+id/movie_title"
+                style="@style/item_name_text_style"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:textColor="@android:color/white"
-                android:textSize="18sp"
+                android:textColor="@color/main_red"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/movie_poster_card"
@@ -67,10 +68,12 @@
 
             <TextView
                 android:id="@+id/movie_release_date"
+                style="@style/item_name_text_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#757575"
-                android:textSize="12sp"
+                android:layout_marginStart="24dp"
+                android:textColor="@color/main_navy"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/movie_title"
                 app:layout_constraintTop_toBottomOf="@+id/movie_title" />
 
@@ -83,11 +86,14 @@
 
             <TextView
                 android:id="@+id/movie_overview"
+                style="@style/item_name_text_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
+                android:textColor="@color/main_navy"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/movie_poster_title_barrier" />
@@ -101,6 +107,19 @@
                 app:layout_constraintEnd_toEndOf="@+id/movie_poster_card"
                 app:layout_constraintStart_toStartOf="@+id/movie_poster_card"
                 app:layout_constraintTop_toBottomOf="@+id/movie_poster_card" />
+
+            <ToggleButton
+                android:id="@+id/detail_favourites_toggle_button"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:background="@drawable/icon_favourite_empty"
+                android:backgroundTint="@color/main_red"
+                android:textOff=""
+                android:textOn=""
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.75"
+                app:layout_constraintStart_toEndOf="@+id/movie_release_date"
+                app:layout_constraintTop_toBottomOf="@+id/movie_title" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>
