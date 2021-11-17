@@ -15,6 +15,7 @@ import com.example.movieapp.data.movie.Movie
 import com.example.movieapp.databinding.GridItemMovieBinding
 import com.example.movieapp.databinding.ListItemMovieBinding
 import com.example.movieapp.feature.list.ListFragmentDirections
+import javax.inject.Inject
 
 class MoviesAdapter(
     private var movies: MutableList<Movie>
@@ -42,7 +43,7 @@ class MoviesAdapter(
     }
 
 
-    class MovieViewHolder private constructor(val binding: ListItemMovieBinding) : RecyclerView.ViewHolder(binding.root) {
+    class MovieViewHolder @Inject constructor(val binding: ListItemMovieBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie: Movie) {
             Glide.with(itemView)

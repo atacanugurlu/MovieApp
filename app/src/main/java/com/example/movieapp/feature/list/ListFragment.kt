@@ -13,17 +13,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.MainApp
 import com.example.movieapp.util.adapter.MoviesAdapter
 import com.example.movieapp.databinding.FragmentListBinding
-import com.example.movieapp.network.Api
-import retrofit2.Retrofit
 import javax.inject.Inject
 
 
 class ListFragment : Fragment() {
 
     @Inject
-    lateinit var retrofit: Retrofit
-    @Inject
-    lateinit var api: Api
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var listedMovies: RecyclerView
     private lateinit var listedMoviesAdapter: MoviesAdapter
@@ -32,7 +28,7 @@ class ListFragment : Fragment() {
 
 
     private val viewModel: ListViewModel by lazy {
-        ViewModelProvider(this)[ListViewModel::class.java]
+        ViewModelProvider(this, viewModelFactory)[ListViewModel::class.java]
     }
 
     override fun onCreateView(

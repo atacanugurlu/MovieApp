@@ -13,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.example.movieapp.databinding.FragmentDetailBinding
+import javax.inject.Inject
 
 
 class DetailFragment : Fragment() {

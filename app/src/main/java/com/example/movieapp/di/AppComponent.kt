@@ -1,6 +1,7 @@
 package com.example.movieapp.di
 
 import android.app.Application
+import android.media.Image
 import com.example.movieapp.MainApp
 import com.example.movieapp.feature.detail.DetailFragment
 import com.example.movieapp.feature.favourite.FavouriteFragment
@@ -12,7 +13,10 @@ import javax.inject.Singleton
 @Component(
     modules = [
         AppModule::class,
-        NetModule::class
+        NetModule::class,
+        DbModule::class,
+        ViewModelModule::class,
+        ImageModule::class
     ]
 )
 

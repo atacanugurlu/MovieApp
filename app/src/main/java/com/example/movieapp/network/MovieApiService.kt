@@ -1,51 +1,29 @@
 package com.example.movieapp.network
 
-import com.example.movieapp.data.Constants.BASE_URL
+
 import com.example.movieapp.data.movie.GetMoviesResponse
 import com.example.movieapp.data.movie.Movie
+import com.example.movieapp.util.network.Api
+import com.example.movieapp.util.constants.Constants.BASE_URL
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Query
 import javax.inject.Inject
+import javax.inject.Singleton
 
 
-interface Api {
-
-    @GET("movie/popular")
-    fun getMovies(
-        @Query("api_key") apiKey: String = "7f61a9bc205af1ae9398b674cbca110c",
-        @Query("page") page: Int
-    ): Call<GetMoviesResponse>
-
-}
-
-object MoviesRepository {
-
-    var api: Api
-
-    init {
-
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        api = retrofit.create(Api::class.java)
-
-
-    }
-
+@Singleton
+class MoviesRepository @Inject constructor(private val api: Api){
 
     fun getMovies(
-        page: Int = 1, onSuccess: (movies: List<Movie>) -> Unit,
+        page: Int = 1,
+        onSuccess: (movies: List<Movie>) -> Unit,
         onError: () -> Unit
     ) {
 
-        api.getMovies(page = page)
+        this.api.getPopularMovies(page = page)
             .enqueue(object : Callback<GetMoviesResponse> {
                 override fun onResponse(
                     call: Call<GetMoviesResponse>,
@@ -70,3 +48,4 @@ object MoviesRepository {
             })
     }
 }
+
