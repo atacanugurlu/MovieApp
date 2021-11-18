@@ -4,13 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.NavDirections
-import androidx.navigation.Navigation
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.example.movieapp.R
 import com.example.movieapp.data.movie.Movie
 import com.example.movieapp.databinding.GridItemMovieBinding
 import com.example.movieapp.databinding.ListItemMovieBinding
@@ -20,8 +18,6 @@ import javax.inject.Inject
 class MoviesAdapter(
     private var movies: MutableList<Movie>
 ) : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
-
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         return MovieViewHolder.from(parent)
@@ -42,8 +38,8 @@ class MoviesAdapter(
         )
     }
 
-
-    class MovieViewHolder @Inject constructor(val binding: ListItemMovieBinding) : RecyclerView.ViewHolder(binding.root) {
+    class MovieViewHolder @Inject constructor(val binding: ListItemMovieBinding)
+        : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie: Movie) {
             Glide.with(itemView)
@@ -56,9 +52,6 @@ class MoviesAdapter(
                 in 0..3 -> "N/A"
                 else -> movie.releaseDate?.substring(0, 4)
             }
-          //  binding.itemMovieYear.text = movie.releaseDate.substring(0, 4)
-
-            // Navigate to detail fragment
             navigateToDetails(itemView, movie)
         }
 
@@ -72,7 +65,8 @@ class MoviesAdapter(
 
     }
 
-    class GridViewHolder private constructor(val binding: GridItemMovieBinding) : RecyclerView.ViewHolder(binding.root){
+    class GridViewHolder private constructor(val binding: GridItemMovieBinding)
+        : RecyclerView.ViewHolder(binding.root){
 
 
         fun bind(movie: Movie) {

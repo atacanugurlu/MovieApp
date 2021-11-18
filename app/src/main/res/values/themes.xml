@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.MovieApp" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <style name="Theme.MovieApp" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/main_red</item>
         <item name="colorPrimaryVariant">@color/variant_red</item>

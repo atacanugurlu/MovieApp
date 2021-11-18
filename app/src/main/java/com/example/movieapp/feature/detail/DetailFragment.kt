@@ -13,7 +13,6 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.example.movieapp.databinding.FragmentDetailBinding
-import javax.inject.Inject
 
 
 class DetailFragment : Fragment() {
@@ -59,13 +58,9 @@ class DetailFragment : Fragment() {
                 .transform(CenterCrop())
                 .into(poster)
         }
-
         title.text = args.movieDetail.title.toString()
         rating.rating = args.movieDetail.rating / 2
         releaseDate.text = args.movieDetail.releaseDate.toString()
         overview.text = args.movieDetail.overview.toString()
     }
-
-
-
 }

@@ -20,7 +20,6 @@ class ListFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-
     private lateinit var listedMovies: RecyclerView
     private lateinit var listedMoviesAdapter: MoviesAdapter
     private lateinit var listedMoviesLinearLayoutManager: LinearLayoutManager
@@ -39,7 +38,7 @@ class ListFragment : Fragment() {
 
         listedMovies = binding.listedMovies
 
-        viewModel.movieData.observe(viewLifecycleOwner){ moviesList ->
+        viewModel.movieData.observe(viewLifecycleOwner) { moviesList ->
             listedMoviesAdapter.appendMovies(moviesList)
             //listedMoviesAdapter.submitList(moviesList)
             attachListedMoviesOnScrollListener()
@@ -60,7 +59,7 @@ class ListFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-            return binding.root
+        return binding.root
     }
 
     private fun attachListedMoviesOnScrollListener() {
@@ -68,7 +67,8 @@ class ListFragment : Fragment() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 val totalItemCount = listedMoviesLinearLayoutManager.itemCount
                 val visibleItemCount = listedMoviesLinearLayoutManager.childCount
-                val firstVisibleItem = listedMoviesLinearLayoutManager.findFirstVisibleItemPosition()
+                val firstVisibleItem =
+                    listedMoviesLinearLayoutManager.findFirstVisibleItemPosition()
 
                 if (firstVisibleItem + visibleItemCount >= totalItemCount / 2) {
                     listedMovies.removeOnScrollListener(this)

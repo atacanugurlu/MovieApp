@@ -8,8 +8,7 @@ import com.example.movieapp.data.movie.Movie
 import com.example.movieapp.network.MoviesRepository
 import javax.inject.Inject
 
-class ListViewModel  @Inject constructor (private val moviesRepository: MoviesRepository): ViewModel(){
-
+class ListViewModel @Inject constructor (private val moviesRepository: MoviesRepository): ViewModel(){
 
     val movieData = MutableLiveData<List<Movie>>()
     var listedMoviesPage = 1

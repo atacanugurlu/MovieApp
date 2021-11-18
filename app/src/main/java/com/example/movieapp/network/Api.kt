@@ -1,6 +1,6 @@
-package com.example.movieapp.util.network
+package com.example.movieapp.network
 
-import com.example.movieapp.data.movie.GetMoviesResponse
+import com.example.movieapp.data.movie.MoviesResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -11,6 +11,6 @@ interface Api {
     fun getPopularMovies(
         @Query("api_key") apiKey: String = "7f61a9bc205af1ae9398b674cbca110c",
         @Query("page") page: Int
-    ): Call<GetMoviesResponse>
+    ): Call<MoviesResponse>
 
 }

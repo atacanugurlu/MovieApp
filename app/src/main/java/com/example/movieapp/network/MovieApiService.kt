@@ -1,15 +1,11 @@
 package com.example.movieapp.network
 
 
-import com.example.movieapp.data.movie.GetMoviesResponse
+import com.example.movieapp.data.movie.MoviesResponse
 import com.example.movieapp.data.movie.Movie
-import com.example.movieapp.util.network.Api
-import com.example.movieapp.util.constants.Constants.BASE_URL
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -24,10 +20,10 @@ class MoviesRepository @Inject constructor(private val api: Api){
     ) {
 
         this.api.getPopularMovies(page = page)
-            .enqueue(object : Callback<GetMoviesResponse> {
+            .enqueue(object : Callback<MoviesResponse> {
                 override fun onResponse(
-                    call: Call<GetMoviesResponse>,
-                    response: Response<GetMoviesResponse>
+                    call: Call<MoviesResponse>,
+                    response: Response<MoviesResponse>
                 ) {
 
                     if (response.isSuccessful) {
@@ -42,7 +38,7 @@ class MoviesRepository @Inject constructor(private val api: Api){
                     }
                 }
 
-                override fun onFailure(call: Call<GetMoviesResponse>, t: Throwable) {
+                override fun onFailure(call: Call<MoviesResponse>, t: Throwable) {
                     onError.invoke()
                 }
             })

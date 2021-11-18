@@ -1,7 +1,7 @@
 package com.example.movieapp.di
 
 import android.app.Application
-import com.example.movieapp.util.network.Api
+import com.example.movieapp.network.Api
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit

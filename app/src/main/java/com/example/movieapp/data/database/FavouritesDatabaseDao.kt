@@ -12,7 +12,7 @@ interface FavouritesDatabaseDao {
 
     //Insert a movie to favourites database
     @Insert
-    fun make_favourite(movie: Movie)
+    fun makeFavourite(movie: Movie)
 
     //Get a movie from favourites database
     @Query("SELECT * from favourite_movies_table WHERE id = :key")
@@ -20,11 +20,11 @@ interface FavouritesDatabaseDao {
 
     //Delete a movie from favourites database
     @Delete
-    fun delete_from_favourites(movie: Movie)
+    fun deleteFromFavourites(movie: Movie)
 
     //Clear favourites database
     @Query("DELETE FROM favourite_movies_table")
-    fun clear_favourites()
+    fun clearFavourites()
 
     //Get favourite movies as live data
     @Query("SELECT * FROM favourite_movies_table ORDER BY movie_title")
