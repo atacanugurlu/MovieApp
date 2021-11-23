@@ -8,7 +8,7 @@ import retrofit2.http.Query
 interface Api {
 
     @GET("movie/popular")
-    fun getPopularMovies(
+    fun getPopularMovies(  //Suspend olmalı
         @Query("api_key") apiKey: String = "7f61a9bc205af1ae9398b674cbca110c",
         @Query("page") page: Int
     ): Call<MoviesResponse>

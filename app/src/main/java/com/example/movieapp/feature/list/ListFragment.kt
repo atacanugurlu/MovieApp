@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +25,7 @@ class ListFragment : Fragment() {
     private lateinit var listedMoviesAdapter: MoviesAdapter
     private lateinit var listedMoviesLinearLayoutManager: LinearLayoutManager
     private lateinit var listedMoviesGridLayoutManager: GridLayoutManager
+    private lateinit var progressBar: ProgressBar
 
 
     private val viewModel: ListViewModel by lazy {
@@ -37,11 +39,14 @@ class ListFragment : Fragment() {
         val binding = FragmentListBinding.inflate(inflater)
 
         listedMovies = binding.listedMovies
+        progressBar = binding.progressBar
 
         viewModel.movieData.observe(viewLifecycleOwner) { moviesList ->
+            progressBar.visibility= View.VISIBLE
             listedMoviesAdapter.appendMovies(moviesList)
             //listedMoviesAdapter.submitList(moviesList)
             attachListedMoviesOnScrollListener()
+            progressBar.visibility = View.GONE
         }
 
         viewModel.getListedMovies()

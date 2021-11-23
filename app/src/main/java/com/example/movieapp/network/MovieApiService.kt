@@ -3,6 +3,9 @@ package com.example.movieapp.network
 
 import com.example.movieapp.data.movie.MoviesResponse
 import com.example.movieapp.data.movie.Movie
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -13,12 +16,11 @@ import javax.inject.Singleton
 @Singleton
 class MoviesRepository @Inject constructor(private val api: Api){
 
-    fun getMovies(
+    fun getMovies(  //suspend olmalı
         page: Int = 1,
         onSuccess: (movies: List<Movie>) -> Unit,
         onError: () -> Unit
-    ) {
-
+    ){
         this.api.getPopularMovies(page = page)
             .enqueue(object : Callback<MoviesResponse> {
                 override fun onResponse(

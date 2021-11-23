@@ -22,7 +22,6 @@ internal abstract class ViewModelModule {
     @ViewModelKey(ListViewModel::class)
     protected abstract fun listViewModel(listViewModel: ListViewModel): ViewModel
 
-    /*
 
     @Binds
     @IntoMap
@@ -34,5 +33,4 @@ internal abstract class ViewModelModule {
     @ViewModelKey(FavouriteViewModel::class)
     protected abstract fun favouriteViewModel(favouriteViewModel: FavouriteViewModel): ViewModel
 
-     */
 }

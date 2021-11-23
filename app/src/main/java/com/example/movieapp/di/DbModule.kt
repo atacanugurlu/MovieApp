@@ -16,7 +16,7 @@ class DbModule {
     internal fun provideDatabase(application: Application): FavouritesDatabase {
         return Room.databaseBuilder(
             application, FavouritesDatabase::class.java, "favourite_movies_database")
-            .allowMainThreadQueries().build()
+            .fallbackToDestructiveMigration().build()
     }
 
     @Provides
