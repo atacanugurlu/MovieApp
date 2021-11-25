@@ -1,5 +1,6 @@
 package com.example.movieapp.di
 
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
@@ -13,14 +14,15 @@ import javax.inject.Singleton
 @Module
 class ImageModule {
 
+    /*
     @Provides
     @Singleton
-    internal fun provideGlide(view: View, path: String, dest: ImageView)
-    : ViewTarget<ImageView, Drawable> =
+    internal fun provideGlide(context: Context, path: String, imageView: ImageView) {
+        Glide.with(context)
+        .load(path)
+        .transform(CenterCrop())
+        .into(imageView)
+    }
 
-        Glide.with(view)
-            .load(path)
-            .transform(CenterCrop())
-            .into(dest)
-
+     */
 }

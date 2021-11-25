@@ -1,5 +1,6 @@
 package com.example.movieapp.feature.detail
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +16,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.example.movieapp.MainApp
 import com.example.movieapp.databinding.FragmentDetailBinding
+import com.example.movieapp.util.ImageLoader
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -36,6 +39,7 @@ class DetailFragment : Fragment() {
     private lateinit var overview: TextView
     private lateinit var progressBar: ProgressBar
 
+
     private val viewModel: DetailViewModel by lazy {
         ViewModelProvider(this, viewModelFactory)[DetailViewModel::class.java]
     }
@@ -43,7 +47,7 @@ class DetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = FragmentDetailBinding.inflate(inflater)
         movieDetails = binding.detailsView
 
@@ -55,36 +59,39 @@ class DetailFragment : Fragment() {
         releaseDate = binding.movieReleaseDate
         overview = binding.movieOverview
 
-        populateDetails(args)
+        lifecycleScope.launch(Dispatchers.IO) { populateDetails(args) }
+
         return binding.root
+
+
     }
 
-    private fun populateDetails(args: DetailFragmentArgs) {
-        lifecycleScope.launch(Dispatchers.Main) {
-            withContext(Dispatchers.Main){ args.movieDetail.let {
-                progressBar.visibility = View.VISIBLE
-                Glide.with(requireContext())
-                    .load("https://image.tmdb.org/t/p/w1280${args.movieDetail.backdropPath}")
-                    .transform(CenterCrop())
-                    .into(backdrop)
+    // async yapınca uyarı veriyor
+    private suspend fun populateDetails(args: DetailFragmentArgs) {
+        progressBar.visibility = View.VISIBLE
 
-            }}
+        withContext(Dispatchers.Main) {
+            ImageLoader.provideGlide(requireContext(),
+                "https://image.tmdb.org/t/p/w1280${args.movieDetail.backdropPath}",
+                backdrop
+            )}
 
-            withContext(Dispatchers.Main) {
-                args.movieDetail.let {
-                    Glide.with(requireContext())
-                        .load("https://image.tmdb.org/t/p/w342${args.movieDetail.posterPath}")
-                        .transform(CenterCrop())
-                        .into(poster)
 
-                }
-            }
-            withContext(Dispatchers.Main) {
-                title.text = args.movieDetail.title.toString()
-                rating.rating = args.movieDetail.rating / 2
-                releaseDate.text = args.movieDetail.releaseDate.toString()
-                overview.text = args.movieDetail.overview.toString()
-            }
+        withContext(Dispatchers.Main) {
+            ImageLoader.provideGlide(requireContext(),"https://image.tmdb.org/t/p/w342${args.movieDetail.posterPath}",
+                poster)}
+
+        withContext(Dispatchers.Main) {
+            title.text = args.movieDetail.title.toString()
+            rating.rating = args.movieDetail.rating / 2
+            releaseDate.text = args.movieDetail.releaseDate.toString()
+            overview.text = args.movieDetail.overview.toString()
         }
+
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        MainApp.instance.appComponent.inject(this)
     }
 }

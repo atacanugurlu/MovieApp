@@ -13,6 +13,9 @@ import com.example.movieapp.data.movie.Movie
 import com.example.movieapp.databinding.GridItemMovieBinding
 import com.example.movieapp.databinding.ListItemMovieBinding
 import com.example.movieapp.feature.list.ListFragmentDirections
+import com.example.movieapp.util.ImageLoader
+import kotlinx.coroutines.currentCoroutineContext
+import java.security.AccessController.getContext
 import javax.inject.Inject
 
 class MoviesAdapter(
@@ -42,10 +45,8 @@ class MoviesAdapter(
         : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie: Movie) {
-            Glide.with(itemView)
-                .load("https://image.tmdb.org/t/p/w342${movie.posterPath}")
-                .transform(CenterCrop())
-                .into(binding.itemMoviePoster)
+            ImageLoader.provideGlide(itemView.context,"https://image.tmdb.org/t/p/w342${movie.posterPath}", binding.itemMoviePoster)
+
             binding.itemMovieName.text = movie.title
             binding.itemMovieRating.text = movie.rating.toString()
             binding.itemMovieYear.text = when(movie.releaseDate?.length){

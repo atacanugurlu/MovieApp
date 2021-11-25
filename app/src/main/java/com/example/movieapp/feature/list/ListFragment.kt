@@ -28,6 +28,7 @@ class ListFragment : Fragment() {
     private lateinit var progressBar: ProgressBar
 
 
+
     private val viewModel: ListViewModel by lazy {
         ViewModelProvider(this, viewModelFactory)[ListViewModel::class.java]
     }
