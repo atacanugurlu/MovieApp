@@ -2,15 +2,16 @@ package com.example.movieapp.network
 
 import com.example.movieapp.data.movie.MoviesResponse
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface Api {
 
     @GET("movie/popular")
-    fun getPopularMovies(  //Suspend olmalı
+    suspend fun getPopularMovies(
         @Query("api_key") apiKey: String = "7f61a9bc205af1ae9398b674cbca110c",
         @Query("page") page: Int
-    ): Call<MoviesResponse>
+    ): Response<MoviesResponse>
 
 }

@@ -28,7 +28,7 @@ class ListViewModel @Inject constructor(private val moviesRepository: MoviesRepo
     }
 
     private fun onListedMoviesFetched(movies: List<Movie>) {
-        movieData.value = movies
+        movieData.postValue(movies)
 
     }
 

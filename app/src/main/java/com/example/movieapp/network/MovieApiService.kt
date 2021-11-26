@@ -3,47 +3,40 @@ package com.example.movieapp.network
 
 import com.example.movieapp.data.movie.MoviesResponse
 import com.example.movieapp.data.movie.Movie
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.await
 import javax.inject.Inject
 import javax.inject.Singleton
 
 
 @Singleton
-class MoviesRepository @Inject constructor(private val api: Api){
+class MoviesRepository @Inject constructor(private val api: Api) {
 
-    fun getMovies(  //suspend olmalı
+    suspend fun getMovies(  //suspend olmalı
         page: Int = 1,
         onSuccess: (movies: List<Movie>) -> Unit,
         onError: () -> Unit
-    ){
-        this.api.getPopularMovies(page = page)
-            .enqueue(object : Callback<MoviesResponse> {
-                override fun onResponse(
-                    call: Call<MoviesResponse>,
-                    response: Response<MoviesResponse>
-                ) {
+    ) {
+        GlobalScope.launch(Dispatchers.IO) {
+            val response = api.getPopularMovies(page = page)
 
-                    if (response.isSuccessful) {
-                        val responseBody = response.body()
-                        if (responseBody != null) {
-                            onSuccess.invoke(responseBody.movies)
-                        } else {
-                            onError.invoke()
-                        }
-                    } else {
-                        onError.invoke()
-                    }
-                }
-
-                override fun onFailure(call: Call<MoviesResponse>, t: Throwable) {
+            if (response.isSuccessful) {
+                val responseBody = response.body()
+                if (responseBody != null) {
+                    onSuccess.invoke(responseBody.movies)
+                } else {
                     onError.invoke()
                 }
-            })
+            } else {
+                onError.invoke()
+            }
+        }
     }
 }
+
+
+
 
