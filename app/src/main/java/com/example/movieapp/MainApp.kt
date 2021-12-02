@@ -3,6 +3,7 @@ package com.example.movieapp
 import android.app.Application
 import com.example.movieapp.di.AppComponent
 import com.example.movieapp.di.DaggerAppComponent
+import com.example.movieapp.di.DbModule
 import com.example.movieapp.di.NetModule
 
 class MainApp : Application() {
@@ -22,7 +23,7 @@ class MainApp : Application() {
     }
 
     private fun initComponent() {
-        appComponent = DaggerAppComponent.builder().netModule(NetModule(this))
+        appComponent = DaggerAppComponent.builder().netModule(NetModule(this)).dbModule(DbModule(this))
             .build()
         appComponent.inject(this)
     }

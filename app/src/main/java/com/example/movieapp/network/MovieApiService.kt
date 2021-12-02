@@ -15,7 +15,7 @@ import javax.inject.Singleton
 @Singleton
 class MoviesRepository @Inject constructor(private val api: Api) {
 
-    suspend fun getMovies(  //suspend olmalı
+    suspend fun getMovies(
         page: Int = 1,
         onSuccess: (movies: List<Movie>) -> Unit,
         onError: () -> Unit

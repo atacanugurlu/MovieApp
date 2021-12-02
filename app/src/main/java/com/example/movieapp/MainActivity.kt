@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         viewPager.adapter = adapter
         viewPager.isUserInputEnabled = true
 
+
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {
                 0 -> {
@@ -52,5 +53,7 @@ class MainActivity : AppCompatActivity() {
         }.attach()
 
 
-    }}
+
+    }
+}
 

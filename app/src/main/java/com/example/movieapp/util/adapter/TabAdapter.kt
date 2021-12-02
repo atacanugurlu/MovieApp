@@ -12,12 +12,18 @@ class TabAdapter(fm: FragmentManager, lifecycle: Lifecycle, private var numberOf
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> {
-                ListFragment()
+                val bundle = Bundle()
+                val listFragment = ListFragment()
+                listFragment.arguments = bundle
+                listFragment
             }
             1 -> {
-                FavouriteFragment()
+                val bundle = Bundle()
+                val favouriteFragment = FavouriteFragment()
+                favouriteFragment.arguments = bundle
+                favouriteFragment
             }
-            else -> createFragment(position)
+            else -> ListFragment()
         }
     }
 

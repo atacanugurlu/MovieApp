@@ -127,7 +127,7 @@
                 android:id="@+id/detail_favourites_toggle_button"
                 android:layout_width="26dp"
                 android:layout_height="26dp"
-                android:background="@drawable/icon_favourite_empty"
+                android:background="@drawable/image_toggle_button"
                 android:backgroundTint="@color/main_red"
                 android:textOff=""
                 android:textOn=""

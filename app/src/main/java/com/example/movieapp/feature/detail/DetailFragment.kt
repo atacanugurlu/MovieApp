@@ -66,7 +66,6 @@ class DetailFragment : Fragment() {
 
     }
 
-    // async yapınca uyarı veriyor
     private suspend fun populateDetails(args: DetailFragmentArgs) {
         progressBar.visibility = View.VISIBLE
 

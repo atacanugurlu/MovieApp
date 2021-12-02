@@ -3,6 +3,7 @@ package com.example.movieapp.feature.list
 import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -28,7 +29,6 @@ class ListFragment : Fragment() {
     private lateinit var progressBar: ProgressBar
 
 
-
     private val viewModel: ListViewModel by lazy {
         ViewModelProvider(this, viewModelFactory)[ListViewModel::class.java]
     }
@@ -52,6 +52,7 @@ class ListFragment : Fragment() {
 
         viewModel.getListedMovies()
 
+
         listedMoviesLinearLayoutManager = LinearLayoutManager(
             requireContext(),
             LinearLayoutManager.VERTICAL,
@@ -61,6 +62,7 @@ class ListFragment : Fragment() {
         listedMovies.layoutManager = listedMoviesLinearLayoutManager
         listedMoviesAdapter = MoviesAdapter(mutableListOf())
         listedMovies.adapter = listedMoviesAdapter
+
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel

@@ -9,11 +9,11 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class DbModule {
+class DbModule(val application: Application) {
 
     @Provides
     @Singleton
-    internal fun provideDatabase(application: Application): FavouritesDatabase {
+    fun provideDatabase(): FavouritesDatabase {
         return Room.databaseBuilder(
             application, FavouritesDatabase::class.java, "favourite_movies_database")
             .fallbackToDestructiveMigration().build()
@@ -21,7 +21,7 @@ class DbModule {
 
     @Provides
     @Singleton
-    internal fun provideMovieDao(database: FavouritesDatabase): FavouritesDatabaseDao {
+    fun provideMovieDao(database: FavouritesDatabase): FavouritesDatabaseDao {
         return database.favouritesDatabaseDao()
     }
 }

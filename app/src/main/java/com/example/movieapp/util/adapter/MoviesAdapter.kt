@@ -1,5 +1,6 @@
 package com.example.movieapp.util.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,18 +8,14 @@ import androidx.navigation.NavDirections
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.example.movieapp.data.movie.Movie
 import com.example.movieapp.databinding.GridItemMovieBinding
 import com.example.movieapp.databinding.ListItemMovieBinding
 import com.example.movieapp.feature.list.ListFragmentDirections
 import com.example.movieapp.util.ImageLoader
-import kotlinx.coroutines.currentCoroutineContext
-import java.security.AccessController.getContext
 import javax.inject.Inject
 
-class MoviesAdapter(
+class MoviesAdapter @Inject constructor(
     private var movies: MutableList<Movie>
 ) : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
 
@@ -41,10 +38,11 @@ class MoviesAdapter(
         )
     }
 
-    class MovieViewHolder @Inject constructor(val binding: ListItemMovieBinding)
+    class MovieViewHolder (val binding: ListItemMovieBinding)
         : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie: Movie) {
+
             ImageLoader.provideGlide(itemView.context,"https://image.tmdb.org/t/p/w342${movie.posterPath}", binding.itemMoviePoster)
 
             binding.itemMovieName.text = movie.title
@@ -53,6 +51,17 @@ class MoviesAdapter(
                 in 0..3 -> "N/A"
                 else -> movie.releaseDate?.substring(0, 4)
             }
+            binding.mainFavouritesToggleButton.setOnCheckedChangeListener { _, isChecked ->
+                if(isChecked){
+                    movie.isFavourite = true
+                    Log.i("button","${movie.isFavourite}")
+                }else {
+                    movie.isFavourite = false
+                    Log.i("button","${movie.isFavourite}")
+
+                }
+            }
+
             navigateToDetails(itemView, movie)
         }
 
@@ -71,10 +80,7 @@ class MoviesAdapter(
 
 
         fun bind(movie: Movie) {
-            Glide.with(itemView)
-                .load("https://image.tmdb.org/t/p/w342${movie.posterPath}")
-                .transform(CenterCrop())
-                .into(binding.itemMoviePoster)
+            ImageLoader.provideGlide(itemView.context,"https://image.tmdb.org/t/p/w342${movie.posterPath}", binding.itemMoviePoster)
 
             // Navigate to detail fragment
             navigateToDetails(itemView, movie)
@@ -95,7 +101,6 @@ private fun navigateToDetails(itemView: View, movie : Movie){
     itemView.setOnClickListener{
         val action: NavDirections = ListFragmentDirections.actionListFragmentToDetailFragment(movie)
         findNavController(itemView).navigate(action)
-       // Navigation.createNavigateOnClickListener(R.id.action_listFragment_to_detailFragment)
     }
 }
 
