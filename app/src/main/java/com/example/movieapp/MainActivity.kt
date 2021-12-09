@@ -1,59 +1,75 @@
 package com.example.movieapp
-
-import TabAdapter
-import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.content.ContextCompat
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
-import com.example.movieapp.databinding.ActivityMainBinding
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
+import com.example.movieapp.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
-    private lateinit var tabLayout: TabLayout
-    private lateinit var viewPager: ViewPager2
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
+
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        setContentView(binding.root)
 
-        tabLayout = binding.tabLayout
-        viewPager = binding.tabsViewpager
+        // Create Toolbar and set support action bar
+        val toolbar = binding.toolbar
+        setSupportActionBar(toolbar)
 
-        tabLayout.setSelectedTabIndicatorColor(Color.WHITE)
-        tabLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.main_red))
-        tabLayout.tabTextColors = ContextCompat.getColorStateList(this, android.R.color.white)
+        // Get NavController
+        val navController = findNavController(R.id.myNavHostFragment)
 
-        val numberOfTabs = 2
-        tabLayout.tabMode = TabLayout.MODE_FIXED
-        tabLayout.isInlineLabel = true
+        // Get App Configuration from nav graph
+        appBarConfiguration = AppBarConfiguration(navController.graph)
 
-        val adapter = TabAdapter(supportFragmentManager, lifecycle, numberOfTabs)
-        viewPager.adapter = adapter
-        viewPager.isUserInputEnabled = true
+        // Handles arrow back button
+        setupActionBarWithNavController(navController, appBarConfiguration)
 
-
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            when (position) {
-                0 -> {
-                    tab.text = "Main Page"
-                    tab.setIcon(R.drawable.icon_home)
-                }
-                1 -> {
-                    tab.text = "Favourites"
-                    tab.setIcon(R.drawable.icon_favourite_filled)
-
-                }
-            }
-        }.attach()
+        listenBackStackChange()
+    }
 
 
+    // This function is required with appbar to handle back button
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.myNavHostFragment)
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
 
+
+    private fun listenBackStackChange() {
+        // Get NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.myNavHostFragment)
+
+        // ChildFragmentManager of NavHostFragment
+        val navHostChildFragmentManager = navHostFragment?.childFragmentManager
+
+        navHostChildFragmentManager?.addOnBackStackChangedListener {
+
+            val backStackEntryCount = navHostChildFragmentManager.backStackEntryCount
+            val fragments = navHostChildFragmentManager.fragments
+            val fragmentCount = fragments.size
+
+            println("🎃 Main graph backStackEntryCount: $backStackEntryCount, fragmentCount: $fragmentCount, fragments: $fragments")
+
+            Toast.makeText(
+                this,
+                "🎃 Main graph backStackEntryCount: $backStackEntryCount, fragmentCount: $fragmentCount, fragments: $fragments",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 }
-

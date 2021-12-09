@@ -15,7 +15,7 @@ class DbModule(val application: Application) {
     @Singleton
     fun provideDatabase(): FavouritesDatabase {
         return Room.databaseBuilder(
-            application, FavouritesDatabase::class.java, "favourite_movies_database")
+            application, FavouritesDatabase::class.java, "movies_database")
             .fallbackToDestructiveMigration().build()
     }
 

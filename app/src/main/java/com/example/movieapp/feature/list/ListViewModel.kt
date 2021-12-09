@@ -1,6 +1,7 @@
 package com.example.movieapp.feature.list
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,7 +18,9 @@ class ListViewModel @Inject constructor(
     private val repository: FavouritesRepository) :
     ViewModel() {
 
-    val movieData = MutableLiveData<List<Movie>>()
+    fun getAllMovies(): LiveData<List<Movie>> {
+        return repository.getAllMovies()
+    }
     var listedMoviesPage = 1
 
     fun getListedMovies() {
@@ -31,26 +34,20 @@ class ListViewModel @Inject constructor(
     }
 
     private fun onListedMoviesFetched(movies: List<Movie>) {
-        movieData.postValue(movies)
+        viewModelScope.launch(Dispatchers.IO) {
+            for (movie in movies) {
+                repository.insertMovie(movie)
+            }
+        }
     }
 
     private fun onError() {
         Log.d("List", "Failed")
     }
 
-    fun insertFavouriteMovie(movie: Movie){
+    fun changeMovieFavor(movieId: Long){
         CoroutineScope(Dispatchers.IO).launch {
-            movie.isFavourite = true
-            repository.insertMovie(movie)
-            Log.i("Database", "${movie.title} inserted")
-        }
-    }
-
-    fun deleteFavouriteMovie(movie:Movie){
-        CoroutineScope(Dispatchers.IO).launch {
-            movie.isFavourite = false
-            repository.deleteMovie(movie)
-            Log.i("Database", "${movie.title} deleted")
+            repository.changeMovieFavor(movieId)
         }
     }
 }

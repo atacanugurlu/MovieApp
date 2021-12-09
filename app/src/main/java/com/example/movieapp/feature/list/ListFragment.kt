@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.MainApp
+import com.example.movieapp.data.movie.Movie
 import com.example.movieapp.util.adapter.MoviesAdapter
 import com.example.movieapp.databinding.FragmentListBinding
 import javax.inject.Inject
@@ -42,8 +43,10 @@ class ListFragment : Fragment() {
         listedMovies = binding.listedMovies
         progressBar = binding.progressBar
 
-        viewModel.movieData.observe(viewLifecycleOwner) { moviesList ->
-            progressBar.visibility= View.VISIBLE
+
+
+        viewModel.getAllMovies().observe(viewLifecycleOwner) { moviesList ->
+            progressBar.visibility = View.VISIBLE
             listedMoviesAdapter.appendMovies(moviesList)
             //listedMoviesAdapter.submitList(moviesList)
             attachListedMoviesOnScrollListener()
@@ -60,14 +63,17 @@ class ListFragment : Fragment() {
         )
 
         listedMovies.layoutManager = listedMoviesLinearLayoutManager
-        listedMoviesAdapter = MoviesAdapter(mutableListOf())
+        listedMoviesAdapter = MoviesAdapter(mutableListOf()) {movieId -> changeFavor(movieId)}
         listedMovies.adapter = listedMoviesAdapter
-
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
         return binding.root
+    }
+
+    private fun changeFavor(movieId: Long) {
+      viewModel.changeMovieFavor(movieId)
     }
 
     private fun attachListedMoviesOnScrollListener() {
@@ -91,5 +97,6 @@ class ListFragment : Fragment() {
         super.onAttach(context)
         MainApp.instance.appComponent.inject(this)
     }
+
 
 }

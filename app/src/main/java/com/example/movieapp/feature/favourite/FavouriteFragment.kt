@@ -45,9 +45,9 @@ class FavouriteFragment : Fragment() {
         favouriteMovies = binding.favouriteMovies
         progressBar = binding.progressBar
 
-        viewModel.favouriteMoviesData.observe(viewLifecycleOwner) {
+        viewModel.getFavouriteMovies().observe(viewLifecycleOwner) {moviesList ->
             progressBar.visibility = View.VISIBLE
-            favouriteMoviesAdapter.appendMovies(viewModel.getFavouriteMovies())
+            favouriteMoviesAdapter.appendMovies(moviesList)
             attachListedMoviesOnScrollListener()
             progressBar.visibility = View.GONE
         }
@@ -61,7 +61,7 @@ class FavouriteFragment : Fragment() {
         )
 
         favouriteMovies.layoutManager = favouriteMoviesLinearLayoutManager
-        favouriteMoviesAdapter = FavouritesAdapter(mutableListOf())
+        favouriteMoviesAdapter = FavouritesAdapter(mutableListOf()) {movieId -> changeFavor(movieId)}
         favouriteMovies.adapter = favouriteMoviesAdapter
 
 
@@ -71,8 +71,9 @@ class FavouriteFragment : Fragment() {
 
         return binding.root
     }
-
-
+    private fun changeFavor(movieId: Long) {
+        viewModel.changeMovieFavor(movieId)
+    }
     private fun attachListedMoviesOnScrollListener() {
         favouriteMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {

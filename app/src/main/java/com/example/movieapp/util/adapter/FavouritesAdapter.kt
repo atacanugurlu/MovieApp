@@ -11,16 +11,22 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.data.movie.Movie
 import com.example.movieapp.databinding.ListItemMovieBinding
-import com.example.movieapp.feature.favourite.FavouriteFragmentDirections
+import com.example.movieapp.feature.pager.PagerFragmentDirections
 import com.example.movieapp.util.ImageLoader
 import javax.inject.Inject
 
 class FavouritesAdapter @Inject constructor(
-    private var favouriteMovies: MutableList<Movie>
+    private var favouriteMovies: MutableList<Movie>,
+    private val onFavouritesButtonClick: (Long) -> Unit
 ) : RecyclerView.Adapter<FavouritesAdapter.FavouritesViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavouritesViewHolder {
-        return FavouritesViewHolder.from(parent)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): FavouritesAdapter.FavouritesViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding = ListItemMovieBinding.inflate(layoutInflater, parent, false)
+        return FavouritesViewHolder(binding)
     }
 
     override fun getItemCount(): Int = favouriteMovies.size
@@ -30,21 +36,18 @@ class FavouritesAdapter @Inject constructor(
         holder.bind(item)
     }
 
-    fun appendMovies(movies: List<Movie>?) {
-        if (movies != null) {
-            this.favouriteMovies.addAll(movies)
-        }
-        if (movies != null) {
-            notifyItemRangeInserted(
-                this.favouriteMovies.size,
-                movies.size - 1
-            )
-        }
+    fun appendMovies(favouriteMovies: List<Movie>) {
+        this.favouriteMovies.addAll(favouriteMovies)
+        notifyItemRangeInserted(
+            this.favouriteMovies.size,
+            favouriteMovies.size - 1
+        )
     }
 
 
-    class FavouritesViewHolder(val binding: ListItemMovieBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class FavouritesViewHolder(
+        val binding: ListItemMovieBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie: Movie) {
 
@@ -60,26 +63,20 @@ class FavouritesAdapter @Inject constructor(
                 in 0..3 -> "N/A"
                 else -> movie.releaseDate?.substring(0, 4)
             }
-            binding.mainFavouritesToggleButton.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    movie.isFavourite = true
-                    Log.i("button", "${movie.isFavourite}")
-                } else {
-                    movie.isFavourite = false
-                    Log.i("button", "${movie.isFavourite}")
+            val toggleButton = binding.mainFavouritesToggleButton
 
-                }
+            if(movie.isFavourite){
+                toggleButton.isChecked = true
             }
 
+            toggleButton.setOnClickListener {
+                onFavouritesButtonClick(movie.id)
+            }
+
+            binding.mainFavouritesToggleButton.setOnClickListener {
+                onFavouritesButtonClick(movie.id)
+            }
             navigateToDetails(itemView, movie)
-        }
-
-        companion object {
-            fun from(parent: ViewGroup): FavouritesViewHolder {
-                val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = ListItemMovieBinding.inflate(layoutInflater, parent, false)
-                return FavouritesViewHolder(binding)
-            }
         }
     }
 }
@@ -88,7 +85,7 @@ private fun navigateToDetails(itemView: View, movie: Movie) {
 
     itemView.setOnClickListener {
         val action: NavDirections =
-            FavouriteFragmentDirections.actionFavouriteFragmentToDetailFragment(movie)
+            PagerFragmentDirections.actionPagerFragmentToDetailFragment(movie)
         Navigation.findNavController(itemView).navigate(action)
     }
 }

@@ -13,29 +13,43 @@ class FavouritesRepository @Inject constructor(
     //Insert a movie to favourites database
     fun insertMovie(movie: Movie){
         CoroutineScope(Dispatchers.IO).launch {
-            favouritesDatabaseDao.makeFavourite(movie)
+            favouritesDatabaseDao.addItem(movie)
         }
     }
 
     //Get a movie from favourites database
-    fun getMovie(id: Long): Movie {
-        return favouritesDatabaseDao.getById(id)
+    fun getMovieById(id: Long): Movie {
+        return favouritesDatabaseDao.getItemById(id)
     }
 
     //Delete a movie from favourites database
     fun deleteMovie(movie: Movie) {
         CoroutineScope(Dispatchers.IO).launch {
-            favouritesDatabaseDao.deleteFromFavourites(movie)
+            favouritesDatabaseDao.deleteItem(movie)
         }
     }
 
     //Clear favourites database
     fun clearDatabase() {
-        favouritesDatabaseDao.clearFavourites()
+        CoroutineScope(Dispatchers.IO).launch {
+            favouritesDatabaseDao.clearDatabase()
+        }
+    }
+
+    //Get movies as live data
+    fun getAllMovies(): LiveData<List<Movie>> {
+        return favouritesDatabaseDao.getAll()
     }
 
     //Get favourite movies as live data
-    fun getAllMovies(): LiveData<List<Movie>> {
+    fun getAllFavouriteMovies(): LiveData<List<Movie>> {
         return favouritesDatabaseDao.getAllFavourites()
+    }
+
+    //Change movie favor by id
+    fun changeMovieFavor(id: Long){
+        CoroutineScope(Dispatchers.IO).launch {
+            favouritesDatabaseDao.changeItemFavor(id)
+        }
     }
 }

@@ -60,8 +60,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/favourite_movies"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
+            android:layout_height="0dp"
             android:clipToPadding="false"
             android:paddingStart="6dp"
             android:paddingEnd="6dp"

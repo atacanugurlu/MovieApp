@@ -19,24 +19,13 @@ class FavouriteViewModel @Inject constructor(
     var favouriteMoviesPage = 1
 
     // Get all favourite movies from the database
-    fun getFavouriteMovies(): List<Movie>? {
-        return repository.getAllMovies().value
+    fun getFavouriteMovies(): LiveData<List<Movie>>{
+        return repository.getAllFavouriteMovies()
     }
 
-    // Delete a movie from the favourites database
-    fun deleteMovie(movie: Movie) {
+    fun changeMovieFavor(movieId: Long){
         CoroutineScope(Dispatchers.IO).launch {
-            movie.isFavourite = false
-            repository.deleteMovie(movie)
-            Log.i("Database", "${movie.title} deleted")
-        }
-    }
-
-    // Not needed in this fragment
-    // Insert a movie into the favourites database
-    fun insertMovie(model: Movie) {
-        CoroutineScope(Dispatchers.IO).launch {
-            repository.insertMovie(model)
+            repository.changeMovieFavor(movieId)
         }
     }
 }
