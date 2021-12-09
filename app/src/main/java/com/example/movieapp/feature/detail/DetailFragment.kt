@@ -77,9 +77,7 @@ class DetailFragment : Fragment() {
             movie = viewModel.getMovieById(args.movieId)
         }
 
-        if(movie.isFavourite){
-            favouriteToggle.isChecked = true
-        }
+        favouriteToggle.isChecked = movie.isFavourite
 
         withContext(Dispatchers.Main) {
             ImageLoader.provideGlide(requireContext(),

@@ -62,9 +62,7 @@ class MoviesAdapter @Inject constructor(
             }
             val toggleButton = binding.mainFavouritesToggleButton
 
-            if(movie.isFavourite){
-                toggleButton.isChecked = true
-            }
+            toggleButton.isChecked = movie.isFavourite
 
             toggleButton.setOnClickListener {
                 onFavouritesButtonClick(movie.id)
