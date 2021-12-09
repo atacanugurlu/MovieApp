@@ -70,7 +70,7 @@ class MoviesAdapter @Inject constructor(
             toggleButton.setOnClickListener {
                 onFavouritesButtonClick(movie.id)
             }
-            navigateToDetails(itemView, movie)
+            navigateToDetails(itemView, movie.id)
         }
     }
 /*
@@ -100,11 +100,11 @@ class MoviesAdapter @Inject constructor(
 }
 
 
-private fun navigateToDetails(itemView: View, movie: Movie) {
+private fun navigateToDetails(itemView: View, movieId: Long) {
 
     itemView.setOnClickListener {
         val action: NavDirections =
-            PagerFragmentDirections.actionPagerFragmentToDetailFragment(movie)
+            PagerFragmentDirections.actionPagerFragmentToDetailFragment(movieId)
         findNavController(itemView).navigate(action)
     }
 }

@@ -76,16 +76,16 @@ class FavouritesAdapter @Inject constructor(
             binding.mainFavouritesToggleButton.setOnClickListener {
                 onFavouritesButtonClick(movie.id)
             }
-            navigateToDetails(itemView, movie)
+            navigateToDetails(itemView, movie.id)
         }
     }
 }
 
-private fun navigateToDetails(itemView: View, movie: Movie) {
+private fun navigateToDetails(itemView: View, movieId: Long) {
 
     itemView.setOnClickListener {
         val action: NavDirections =
-            PagerFragmentDirections.actionPagerFragmentToDetailFragment(movie)
+            PagerFragmentDirections.actionPagerFragmentToDetailFragment(movieId)
         Navigation.findNavController(itemView).navigate(action)
     }
 }

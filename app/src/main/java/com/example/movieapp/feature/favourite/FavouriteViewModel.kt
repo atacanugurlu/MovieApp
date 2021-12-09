@@ -15,7 +15,6 @@ import javax.inject.Inject
 class FavouriteViewModel @Inject constructor(
     private val repository: FavouritesRepository): ViewModel() {
 
-    val favouriteMoviesData = MutableLiveData<List<Movie>>()
     var favouriteMoviesPage = 1
 
     // Get all favourite movies from the database
