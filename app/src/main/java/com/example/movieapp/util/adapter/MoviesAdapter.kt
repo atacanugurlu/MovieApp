@@ -34,13 +34,6 @@ class MoviesAdapter @Inject constructor(
         holder.bind(item)
     }
 
-    fun appendMovies(movies: List<Movie>) {
-        this.movies.addAll(movies)
-        notifyItemRangeInserted(
-            this.movies.size,
-            movies.size - 1
-        )
-    }
 
     inner class MovieViewHolder(
         val binding: ListItemMovieBinding,
