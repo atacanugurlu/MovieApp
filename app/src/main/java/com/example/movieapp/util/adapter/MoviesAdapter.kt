@@ -9,16 +9,13 @@ import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.movieapp.R
 import com.example.movieapp.data.movie.Movie
-import com.example.movieapp.databinding.GridItemMovieBinding
 import com.example.movieapp.databinding.ListItemMovieBinding
 import com.example.movieapp.feature.pager.PagerFragmentDirections
 import com.example.movieapp.util.ImageLoader
 import javax.inject.Inject
 
 class MoviesAdapter @Inject constructor(
-    private var movies: MutableList<Movie>,
     private val onFavouritesButtonClick: (Long) -> Unit
 ) : ListAdapter<Movie, MoviesAdapter.MovieViewHolder>(MovieDiffCallback()) {
 
@@ -63,30 +60,6 @@ class MoviesAdapter @Inject constructor(
             navigateToDetails(itemView, movie.id)
         }
     }
-/*
-    class GridViewHolder private constructor(val binding: GridItemMovieBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-
-        fun bind(movie: Movie) {
-            ImageLoader.provideGlide(
-                itemView.context,
-                "https://image.tmdb.org/t/p/w342${movie.posterPath}",
-                binding.itemMoviePoster
-            )
-
-            // Navigate to detail fragment
-            navigateToDetails(itemView, movie)
-        }
-
-        companion object {
-            fun from(parent: ViewGroup): GridViewHolder {
-                val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = GridItemMovieBinding.inflate(layoutInflater, parent, false)
-                return GridViewHolder(binding)
-            }
-        }
-    }*/
 }
 
 

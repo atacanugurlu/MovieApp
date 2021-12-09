@@ -6,6 +6,7 @@
     tools:context=".feature.favourite.FavouriteFragment">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.example.movieapp.feature.favourite.FavouriteViewModel" />
@@ -23,7 +24,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
 
 
             <RadioGroup
@@ -54,7 +54,6 @@
             </RadioGroup>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
         <androidx.recyclerview.widget.RecyclerView

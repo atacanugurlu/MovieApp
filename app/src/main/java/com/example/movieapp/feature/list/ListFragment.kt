@@ -61,9 +61,23 @@ class ListFragment : Fragment() {
             false
         )
 
+        //Starts as linear Layout
         listedMovies.layoutManager = listedMoviesLinearLayoutManager
-        listedMoviesAdapter = MoviesAdapter(mutableListOf()) {movieId -> changeFavor(movieId)}
+        listedMoviesAdapter = MoviesAdapter() { movieId -> changeFavor(movieId) }
         listedMovies.adapter = listedMoviesAdapter
+
+
+        //Grid Layout
+        binding.gridButton.setOnClickListener {
+            listedMoviesGridLayoutManager = GridLayoutManager(activity, 3)
+            listedMovies.layoutManager = listedMoviesGridLayoutManager
+        }
+        //Linear Layout
+        binding.listButton.setOnClickListener {
+            listedMovies.layoutManager = listedMoviesLinearLayoutManager
+            listedMovies.adapter = listedMoviesAdapter
+        }
+
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
@@ -72,7 +86,7 @@ class ListFragment : Fragment() {
     }
 
     private fun changeFavor(movieId: Long) {
-      viewModel.changeMovieFavor(movieId)
+        viewModel.changeMovieFavor(movieId)
     }
 
     private fun attachListedMoviesOnScrollListener() {

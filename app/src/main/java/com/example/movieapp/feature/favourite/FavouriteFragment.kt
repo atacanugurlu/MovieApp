@@ -45,7 +45,7 @@ class FavouriteFragment : Fragment() {
         favouriteMovies = binding.favouriteMovies
         progressBar = binding.progressBar
 
-        viewModel.getFavouriteMovies().observe(viewLifecycleOwner) {moviesList ->
+        viewModel.getFavouriteMovies().observe(viewLifecycleOwner) { moviesList ->
             progressBar.visibility = View.VISIBLE
             favouriteMoviesAdapter.submitList(moviesList)
             progressBar.visibility = View.GONE
@@ -59,17 +59,30 @@ class FavouriteFragment : Fragment() {
             false
         )
 
+        //Starts as linear Layout
         favouriteMovies.layoutManager = favouriteMoviesLinearLayoutManager
-        favouriteMoviesAdapter = FavouritesAdapter() {movieId -> changeFavor(movieId)}
+        favouriteMoviesAdapter = FavouritesAdapter() { movieId -> changeFavor(movieId) }
         favouriteMovies.adapter = favouriteMoviesAdapter
 
 
+        //Grid Layout
+        binding.gridButton.setOnClickListener {
+            favouriteMoviesGridLayoutManager = GridLayoutManager(activity, 3)
+            favouriteMovies.layoutManager = favouriteMoviesGridLayoutManager
+        }
+
+        //Linear Layout
+        binding.listButton.setOnClickListener {
+            favouriteMovies.layoutManager = favouriteMoviesLinearLayoutManager
+            favouriteMovies.adapter = favouriteMoviesAdapter
+        }
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
         return binding.root
     }
+
     private fun changeFavor(movieId: Long) {
         viewModel.changeMovieFavor(movieId)
     }
