@@ -44,6 +44,11 @@ class FavouritesAdapter @Inject constructor(
         )
     }
 
+    fun appendMovie(favouriteMovie : Movie) {
+        this.favouriteMovies.add(favouriteMovie)
+        notifyItemInserted(this.favouriteMovies.size)
+    }
+
 
     inner class FavouritesViewHolder(
         val binding: ListItemMovieBinding

@@ -15,8 +15,6 @@ import javax.inject.Inject
 class FavouriteViewModel @Inject constructor(
     private val repository: FavouritesRepository): ViewModel() {
 
-    var favouriteMoviesPage = 1
-
     // Get all favourite movies from the database
     fun getFavouriteMovies(): LiveData<List<Movie>>{
         return repository.getAllFavouriteMovies()

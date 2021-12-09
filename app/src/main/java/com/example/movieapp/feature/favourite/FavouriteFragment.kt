@@ -48,7 +48,6 @@ class FavouriteFragment : Fragment() {
         viewModel.getFavouriteMovies().observe(viewLifecycleOwner) {moviesList ->
             progressBar.visibility = View.VISIBLE
             favouriteMoviesAdapter.appendMovies(moviesList)
-            attachListedMoviesOnScrollListener()
             progressBar.visibility = View.GONE
         }
 
@@ -74,22 +73,7 @@ class FavouriteFragment : Fragment() {
     private fun changeFavor(movieId: Long) {
         viewModel.changeMovieFavor(movieId)
     }
-    private fun attachListedMoviesOnScrollListener() {
-        favouriteMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                val totalItemCount = favouriteMoviesLinearLayoutManager.itemCount
-                val visibleItemCount = favouriteMoviesLinearLayoutManager.childCount
-                val firstVisibleItem =
-                    favouriteMoviesLinearLayoutManager.findFirstVisibleItemPosition()
 
-                if (firstVisibleItem + visibleItemCount >= totalItemCount / 2) {
-                    favouriteMovies.removeOnScrollListener(this)
-                    viewModel.favouriteMoviesPage++
-                    viewModel.getFavouriteMovies()
-                }
-            }
-        })
-    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
