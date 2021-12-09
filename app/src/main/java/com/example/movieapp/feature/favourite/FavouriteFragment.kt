@@ -47,7 +47,7 @@ class FavouriteFragment : Fragment() {
 
         viewModel.getFavouriteMovies().observe(viewLifecycleOwner) {moviesList ->
             progressBar.visibility = View.VISIBLE
-            favouriteMoviesAdapter.appendMovies(moviesList)
+            favouriteMoviesAdapter.submitList(moviesList)
             progressBar.visibility = View.GONE
         }
 

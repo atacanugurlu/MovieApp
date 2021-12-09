@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.data.movie.Movie
 import com.example.movieapp.databinding.ListItemMovieBinding
@@ -18,7 +19,7 @@ import javax.inject.Inject
 class FavouritesAdapter @Inject constructor(
     private var favouriteMovies: MutableList<Movie>,
     private val onFavouritesButtonClick: (Long) -> Unit
-) : RecyclerView.Adapter<FavouritesAdapter.FavouritesViewHolder>() {
+) : ListAdapter<Movie, FavouritesAdapter.FavouritesViewHolder>(FavouriteDiffCallback()) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -29,13 +30,14 @@ class FavouritesAdapter @Inject constructor(
         return FavouritesViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = favouriteMovies.size
+   // override fun getItemCount(): Int = favouriteMovies.size
 
     override fun onBindViewHolder(holder: FavouritesViewHolder, position: Int) {
-        val item = favouriteMovies[position]
+        val item = getItem(position)
+       // val item = favouriteMovies[position]
         holder.bind(item)
     }
-
+/*
     fun appendMovies(favouriteMovies: List<Movie>) {
         this.favouriteMovies.addAll(favouriteMovies)
         notifyItemRangeInserted(
@@ -44,11 +46,14 @@ class FavouritesAdapter @Inject constructor(
         )
     }
 
+
+
+
     fun appendMovie(favouriteMovie : Movie) {
         this.favouriteMovies.add(favouriteMovie)
         notifyItemInserted(this.favouriteMovies.size)
     }
-
+    */
 
     inner class FavouritesViewHolder(
         val binding: ListItemMovieBinding
