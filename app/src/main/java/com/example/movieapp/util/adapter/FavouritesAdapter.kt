@@ -17,7 +17,6 @@ import com.example.movieapp.util.ImageLoader
 import javax.inject.Inject
 
 class FavouritesAdapter @Inject constructor(
-    private var favouriteMovies: MutableList<Movie>,
     private val onFavouritesButtonClick: (Long) -> Unit
 ) : ListAdapter<Movie, FavouritesAdapter.FavouritesViewHolder>(FavouriteDiffCallback()) {
 
@@ -30,30 +29,10 @@ class FavouritesAdapter @Inject constructor(
         return FavouritesViewHolder(binding)
     }
 
-   // override fun getItemCount(): Int = favouriteMovies.size
-
     override fun onBindViewHolder(holder: FavouritesViewHolder, position: Int) {
         val item = getItem(position)
-       // val item = favouriteMovies[position]
         holder.bind(item)
     }
-/*
-    fun appendMovies(favouriteMovies: List<Movie>) {
-        this.favouriteMovies.addAll(favouriteMovies)
-        notifyItemRangeInserted(
-            this.favouriteMovies.size,
-            favouriteMovies.size - 1
-        )
-    }
-
-
-
-
-    fun appendMovie(favouriteMovie : Movie) {
-        this.favouriteMovies.add(favouriteMovie)
-        notifyItemInserted(this.favouriteMovies.size)
-    }
-    */
 
     inner class FavouritesViewHolder(
         val binding: ListItemMovieBinding

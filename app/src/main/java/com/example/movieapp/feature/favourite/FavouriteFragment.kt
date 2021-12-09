@@ -60,7 +60,7 @@ class FavouriteFragment : Fragment() {
         )
 
         favouriteMovies.layoutManager = favouriteMoviesLinearLayoutManager
-        favouriteMoviesAdapter = FavouritesAdapter(mutableListOf()) {movieId -> changeFavor(movieId)}
+        favouriteMoviesAdapter = FavouritesAdapter() {movieId -> changeFavor(movieId)}
         favouriteMovies.adapter = favouriteMoviesAdapter
 
 

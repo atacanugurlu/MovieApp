@@ -21,7 +21,7 @@ class ListViewModel @Inject constructor(
     fun getAllMovies(): LiveData<List<Movie>> {
         return repository.getAllMovies()
     }
-    var listedMoviesPage = 1
+    private var listedMoviesPage = 1
 
     fun getListedMovies() {
         viewModelScope.launch(Dispatchers.IO) {

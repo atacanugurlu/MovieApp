@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.navigation.NavDirections
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.R
 import com.example.movieapp.data.movie.Movie
@@ -19,7 +20,7 @@ import javax.inject.Inject
 class MoviesAdapter @Inject constructor(
     private var movies: MutableList<Movie>,
     private val onFavouritesButtonClick: (Long) -> Unit
-) : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
+) : ListAdapter<Movie, MoviesAdapter.MovieViewHolder>(MovieDiffCallback()) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -28,10 +29,8 @@ class MoviesAdapter @Inject constructor(
         return MovieViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = movies.size
-
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        val item = movies[position]
+        val item = getItem(position)
         holder.bind(item)
     }
 
