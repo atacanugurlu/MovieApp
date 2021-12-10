@@ -34,4 +34,11 @@ interface FavouritesDatabaseDao {
     //Update movie favor by id
     @Query("UPDATE movies_table SET movie_is_favourite = NOT movie_is_favourite WHERE id = :key")
     fun changeItemFavor(key: Long)
+
+    /*
+    //Return movies if they include searched query
+    @Query("SELECT * FROM movies_table WHERE movie_title LIKE '%query%'")
+    fun getSearched(query:String):LiveData<List<Movie>>
+
+     */
 }

@@ -27,7 +27,6 @@
             app:layout_constraintTop_toTopOf="parent">
 
 
-
             <RadioGroup
                 android:id="@+id/grid_list_button"
                 style="@style/radio_group_style"
@@ -54,6 +53,16 @@
                     android:background="@drawable/background_radio_items"
                     android:button="@drawable/icon_grid" />
             </RadioGroup>
+
+            <SearchView
+                android:id="@+id/search_view"
+                android:layout_width="177dp"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/grid_list_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:searchIcon="@drawable/icon_search"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

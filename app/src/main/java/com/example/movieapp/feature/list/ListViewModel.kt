@@ -1,10 +1,7 @@
 package com.example.movieapp.feature.list
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.movieapp.data.database.FavouritesRepository
 import com.example.movieapp.data.movie.Movie
 import com.example.movieapp.network.MoviesRepository
@@ -17,6 +14,13 @@ class ListViewModel @Inject constructor(
     private val moviesRepository: MoviesRepository,
     private val repository: FavouritesRepository) :
     ViewModel() {
+
+    val searchedMovies = MutableLiveData<List<Movie>>()
+    val mediator = MediatorLiveData<Unit>()
+
+    init {
+        mediator.addSource(getAllMovies()) { searchedMovies.value = it }
+    }
 
     fun getAllMovies(): LiveData<List<Movie>> {
         return repository.getAllMovies()
@@ -50,4 +54,12 @@ class ListViewModel @Inject constructor(
             repository.changeMovieFavor(movieId)
         }
     }
+
+   fun searchMovies(): LiveData<List<Movie>> {
+       return getAllMovies()
+   }
+
+
+
+
 }

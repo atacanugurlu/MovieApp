@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.SearchView
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +18,7 @@ import com.example.movieapp.MainApp
 import com.example.movieapp.data.movie.Movie
 import com.example.movieapp.util.adapter.MoviesAdapter
 import com.example.movieapp.databinding.FragmentListBinding
+import java.util.*
 import javax.inject.Inject
 
 
@@ -28,6 +31,7 @@ class ListFragment : Fragment() {
     private lateinit var listedMoviesLinearLayoutManager: LinearLayoutManager
     private lateinit var listedMoviesGridLayoutManager: GridLayoutManager
     private lateinit var progressBar: ProgressBar
+    private lateinit var searchView: SearchView
 
 
     private val viewModel: ListViewModel by lazy {
@@ -42,7 +46,7 @@ class ListFragment : Fragment() {
 
         listedMovies = binding.listedMovies
         progressBar = binding.progressBar
-
+        searchView = binding.searchView
 
 
         viewModel.getAllMovies().observe(viewLifecycleOwner) { moviesList ->
@@ -77,6 +81,29 @@ class ListFragment : Fragment() {
             listedMovies.layoutManager = listedMoviesLinearLayoutManager
             listedMovies.adapter = listedMoviesAdapter
         }
+
+        //Search view
+        searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                TODO("Not yet implemented")
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText != null) {
+                    if(newText.length > 2){
+                        viewModel.searchMovies().observe(viewLifecycleOwner){movies->
+                            Log.i("dasdasdff","${movies[0].title}")
+                        }
+                    }
+                }
+                return true
+            }
+
+
+
+        })
+
+
 
 
         binding.lifecycleOwner = this
