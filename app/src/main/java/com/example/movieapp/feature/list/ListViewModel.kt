@@ -15,12 +15,6 @@ class ListViewModel @Inject constructor(
     private val repository: FavouritesRepository) :
     ViewModel() {
 
-    val searchedMovies = MutableLiveData<List<Movie>>()
-    val mediator = MediatorLiveData<Unit>()
-
-    init {
-        mediator.addSource(getAllMovies()) { searchedMovies.value = it }
-    }
 
     fun getAllMovies(): LiveData<List<Movie>> {
         return repository.getAllMovies()
@@ -55,8 +49,8 @@ class ListViewModel @Inject constructor(
         }
     }
 
-   fun searchMovies(): LiveData<List<Movie>> {
-       return getAllMovies()
+   fun searchMovies(query:String): LiveData<List<Movie>> {
+       return repository.getSearchedMovies(query)
    }
 
 

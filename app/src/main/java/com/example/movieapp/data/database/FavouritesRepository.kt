@@ -53,12 +53,11 @@ class FavouritesRepository @Inject constructor(
         }
     }
 
-    /*
+
     //Return movies if they include searched query
     fun getSearchedMovies(query:String):LiveData<List<Movie>>{
             return favouritesDatabaseDao.getSearched(query)
 
-
     }
-    */
+
 }

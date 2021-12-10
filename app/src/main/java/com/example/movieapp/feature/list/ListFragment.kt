@@ -91,19 +91,20 @@ class ListFragment : Fragment() {
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText != null) {
                     if(newText.length > 2){
-                        viewModel.searchMovies().observe(viewLifecycleOwner){movies->
-                            Log.i("dasdasdff","${movies[0].title}")
+                        viewModel.searchMovies(newText).observe(viewLifecycleOwner){movies->
+                            listedMoviesAdapter.submitList(movies)
+                        }
+                    }
+                    if(newText.isEmpty()){
+                        viewModel.getAllMovies().observe(viewLifecycleOwner) { moviesList ->
+                            listedMoviesAdapter.submitList(moviesList)
+                            attachListedMoviesOnScrollListener()
                         }
                     }
                 }
                 return true
             }
-
-
-
         })
-
-
 
 
         binding.lifecycleOwner = this
